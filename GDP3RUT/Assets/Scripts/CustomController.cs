@@ -68,15 +68,15 @@ public class CustomController : MonoBehaviour {
 			ray = new Ray(transform.position, grav_vec);
 			if (Physics.Raycast (ray, out hit, jumpRange)){
 				//if(hit.normal == prev_hit || prev_hit == Vector3.zero)
-				if(hit.normal != transform.up)
+				//if(hit.normal != myNormal)
 					//StartCoroutine (ReorientPlayer(hit.normal, 2.0f, 2, jumpTime));
 				//else
 					//StartCoroutine (ReorientPlayer(hit.normal, 2.0f, 3, jumpTime));
-					FixNormal (hit.normal);
+					FixNormal (hit.normal, 0.5f);
 			}
 			else{
 				//StartCoroutine (ReorientPlayer(-grav_vec, 0.2f, 1, jumpTime));	
-				FixNormal (-grav_vec);
+				FixNormal (-grav_vec, 0.05f);
 			}
 		}
 		else{
@@ -95,7 +95,7 @@ public class CustomController : MonoBehaviour {
 	    else {
 	        isGrounded = false;
 	        // assume usual ground normal to avoid "falling forever"
-	        surfaceNormal = Vector3.up; 
+	        surfaceNormal = -grav_vec; 
 	    }
 	    myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed*Time.deltaTime);
 	    // find forward direction with new myNormal:
@@ -108,8 +108,9 @@ public class CustomController : MonoBehaviour {
 	    transform.Translate(Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime,0,0); 
 	}
 	
-	void FixNormal(Vector3 normal){
-		myNormal = normal;	
+	void FixNormal(Vector3 normal, float radDelta){
+		//myNormal = normal;	
+		myNormal = Vector3.RotateTowards (myNormal, normal, radDelta, 1.0f);
 	}
 	
 	IEnumerator ReorientPlayer(Vector3 normal, float timeScale, int type, float time){
