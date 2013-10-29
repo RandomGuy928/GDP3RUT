@@ -35,6 +35,10 @@ public class Repulsor : MonoBehaviour {
 		active = false;	
 	}
 	
+	public bool GetActive(){
+		return active;	
+	}
+	
 	public Vector3 Contribution(Vector3 point){
 		Vector3 vec;
 		if(!active || range == 0)
