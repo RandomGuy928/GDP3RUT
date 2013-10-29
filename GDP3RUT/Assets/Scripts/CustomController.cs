@@ -152,4 +152,10 @@ public class CustomController : MonoBehaviour {
 	    rigidbody.isKinematic = false; // enable physics
 	    jumping = false; // jumping to wall finished
 	}
+	
+	void OnDrawGizmos(){
+		if(manager != null)
+			Gizmos.DrawRay (transform.position, manager.GravityAtPoint (transform.position));
+		//Gizmos.DrawRay (transform.position, jumping.jumpDir);
+	}
 }
