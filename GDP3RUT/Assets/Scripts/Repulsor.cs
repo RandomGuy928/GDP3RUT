@@ -10,6 +10,7 @@ public class Repulsor : MonoBehaviour {
 	public bool blockable;
 	public bool isGravityPlane;
 	public Vector3 gravityPlaneVector;
+	public bool active = true;
 	
 	// Use this for initialization
 	void Start () {
@@ -22,9 +23,21 @@ public class Repulsor : MonoBehaviour {
 	
 	}
 	
+	public void ToggleActive(){
+		active = !active;
+	}
+	
+	public void SetActive(){
+		active = true;	
+	}
+	
+	public void SetInactive(){
+		active = false;	
+	}
+	
 	public Vector3 Contribution(Vector3 point){
 		Vector3 vec;
-		if(range == 0)
+		if(!active || range == 0)
 			return Vector3.zero;
 		if(isGravityPlane)
 			vec = gravityPlaneVector;
