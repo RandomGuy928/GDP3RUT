@@ -13,7 +13,7 @@ public class RemoteControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		SelectRepulser()
+		SelectRepulser();
 	}
 	
 	void SelectRepulser ()
