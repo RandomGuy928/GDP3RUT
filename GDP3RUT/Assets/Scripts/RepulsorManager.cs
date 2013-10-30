@@ -10,6 +10,8 @@ public class RepulsorManager : MonoBehaviour {
 	
 	void Start() {
 		GameObject.FindGameObjectWithTag ("Player").GetComponent<CustomController>().SetManager(gameObject);
+		GameObject.FindGameObjectWithTag ("Particle").GetComponent<ParticleGravity>().SetManager(gameObject);
+		GameObject.FindGameObjectWithTag ("HUD").GetComponent<HUDGravity>().SetManager(gameObject);
 	}
 	
 	// Update is called once per frame

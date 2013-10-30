@@ -214,7 +214,7 @@ public class CharacterMotor : MonoBehaviour
 
         // Apply gravity and jumping force
         velocity = ApplyGravityAndJumping(velocity);
-		
+
         // Moving platform support
         Vector3 moveDistance = Vector3.zero;
         if(MoveWithPlatform())
