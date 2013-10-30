@@ -6,6 +6,7 @@ public class RepulsorManager : MonoBehaviour {
 	ArrayList repulsors = new ArrayList();
 	public Vector3 grav_vec;
 	public float grav_strength;
+	public LayerMask blockRaycast;
 	
 	void Start() {
 		GameObject.FindGameObjectWithTag ("Player").GetComponent<CustomController>().SetManager(gameObject);
@@ -27,5 +28,9 @@ public class RepulsorManager : MonoBehaviour {
 			grav = grav + new_grav_component;//(strength * Vector3.Normalize(point - rPos));
 		}
 		return grav;
+	}
+	
+	public LayerMask GetMask(){
+		return blockRaycast;	
 	}
 }

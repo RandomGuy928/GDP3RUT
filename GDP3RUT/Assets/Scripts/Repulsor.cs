@@ -64,7 +64,7 @@ public class Repulsor : MonoBehaviour {
 	    RaycastHit hit;
 	    ray = new Ray(point, -vec);
 		if (blockable){
-			if(Physics.Raycast(ray, out hit, dist)){
+			if(Physics.Raycast(ray, out hit, dist, manager.GetMask ())){
 				GameObject other = hit.collider.gameObject;
 				if(gameObject != other)
 					return Vector3.zero;
