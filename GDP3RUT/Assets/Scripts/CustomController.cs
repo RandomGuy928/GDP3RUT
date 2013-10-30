@@ -34,7 +34,7 @@ public class CustomController : MonoBehaviour {
 	    rigidbody.freezeRotation = true; // disable physics rotation
 	    // distance from transform.position to ground
 	    //distGround = collider.bounds.extents.y - collider.center.y;
-		distGround = 2.0f;
+		distGround = 1.3f;
 	}
 	 
 	void FixedUpdate(){
