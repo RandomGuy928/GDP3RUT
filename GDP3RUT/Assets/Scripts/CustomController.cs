@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class CustomController : MonoBehaviour {
-
+	
+	public float terminalVelocity = 20f;
 	public float moveSpeed = 6f; // move speed
 	public float turnSpeed = 90f; // turning speed (degrees/second)
 	public float lerpSpeed = 10f; // smoothing speed
@@ -40,10 +41,14 @@ public class CustomController : MonoBehaviour {
 	void FixedUpdate(){
 	    // apply constant weight force according to character normal:
 	    //rigidbody.AddForce(-gravity*rigidbody.mass*myNormal);
+		
 		if(!isGrounded)
 	    	rigidbody.AddForce(manager.GravityAtPoint (transform.position));
 		else
 			rigidbody.AddForce (-surfaceNormal * manager.GravityAtPoint (transform.position).magnitude);
+		
+		if(rigidbody.velocity.magnitude > terminalVelocity)
+			rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
 	}
 	 
 	void Update(){
