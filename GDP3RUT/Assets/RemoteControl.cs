@@ -16,6 +16,8 @@ public class RemoteControl : MonoBehaviour {
 	public GameObject leftRemote;
 	public GameObject rightRemote;
 	
+	public bool displayConnections = false;
+	
 	// Use this for initialization
 	void Start () 
 	{
@@ -24,6 +26,11 @@ public class RemoteControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		
+		if(Input.GetButtonDown ("ToggleConnections")){
+			displayConnections = !displayConnections;	
+		}
+			
 		
 		if(!Input.GetButton ("Shift")){
 			if(Input.GetButtonDown("Fire1") && leftRemote != null){
@@ -34,10 +41,10 @@ public class RemoteControl : MonoBehaviour {
 			}
 		}
 		
-		GameObject sel = SelectRepulser(maxAngleClose, closeFarThreshold, true);
+		GameObject sel = SelectRepulser(maxAngleClose, closeFarThreshold, true, false);
 		bool close;
 		if(sel == null){
-			sel = SelectRepulser (maxAngleFar, 9999f, false);
+			sel = SelectRepulser (maxAngleFar, 9999f, false, false);
 			close = false;
 		}
 		else{
@@ -45,43 +52,64 @@ public class RemoteControl : MonoBehaviour {
 		}
 
 		if(last != sel && last != null){
-			last.GetComponent<Selector>().Deselect();
+			Selector s = last.GetComponent<Selector>();
+			s.Deselect();
+			s.Detarget ();
 			last = null;
 		}
-		if(sel == null)
-			return;
-		last = sel;
-		sel.GetComponent<Selector>().Select();
-		sel.GetComponent<Selector>().SetClose(close);
-		
-		if(sel.GetComponent<Selector>().canBeSaved){
-			if(Input.GetButton ("Shift")){
-				if(Input.GetButtonDown ("Fire1")){
-					if(rightRemote == sel){
-						rightRemote = leftRemote;	
+		if(last == sel && last != null){
+			last.GetComponent<Selector>().Detarget ();	
+		}
+		if(sel != null){
+			last = sel;
+			sel.GetComponent<Selector>().Select();
+			sel.GetComponent<Selector>().SetClose(close);
+			
+			if(sel.GetComponent<Selector>().canBeSaved){
+				if(Input.GetButton ("Shift")){
+					if(Input.GetButtonDown ("Fire1")){
+						if(rightRemote == sel){
+							rightRemote = leftRemote;	
+						}
+						leftRemote = sel;
 					}
-					leftRemote = sel;
-				}
-				if(Input.GetButtonDown ("Fire2")){
-					if(leftRemote == sel){
-						leftRemote = rightRemote;	
+					if(Input.GetButtonDown ("Fire2")){
+						if(leftRemote == sel){
+							leftRemote = rightRemote;	
+						}
+						rightRemote = sel;
 					}
-					rightRemote = sel;
 				}
 			}
+			
+			if(Input.GetButtonDown("Use") && close){
+				sel.GetComponent<Selector>().Trigger();	
+			}
+			if(!displayConnections)
+				return;
+		}
+		else{
+			if(!displayConnections)
+				return;
+			sel = SelectRepulser(maxAngleClose, closeFarThreshold, true, true);
+			if(sel == null){
+				sel = SelectRepulser (maxAngleFar, 9999f, false, true);
+			}
+			last = sel;
 		}
 		
-		if(Input.GetButtonDown("Use") && close){
-			sel.GetComponent<Selector>().Trigger();	
-		}
-
+		if(sel == null)
+			return;
+		
+		sel.GetComponent<Selector>().Target ();
+		
 		
 
 
 		//    currentSelections.Clear ();
 	}
 	
-	GameObject SelectRepulser (float angle, float maxDist, bool close)
+	GameObject SelectRepulser (float angle, float maxDist, bool close, bool ignoreSelectability)
 	{
 		// check if cone collides with repulsors
 		// if more than 1: select the repulsor that is closest to the center of the Cone.
@@ -95,8 +123,8 @@ public class RemoteControl : MonoBehaviour {
 		for(int i = 0; i < selectors.Count; i++){
 			Vector3 newVec = ((GameObject)selectors[i]).transform.position - transform.position;
 			if(newVec.magnitude > maxDist ||
-				(((GameObject)selectors[i]).GetComponent<Selector>().closeOnly && !close) ||
-				!((GameObject)selectors[i]).GetComponent<Selector>().canBeSelected)
+				(!ignoreSelectability && ((GameObject)selectors[i]).GetComponent<Selector>().closeOnly && !close) ||
+				(!ignoreSelectability && !((GameObject)selectors[i]).GetComponent<Selector>().canBeSelected))
 				continue;
 			float a = Vector3.Angle (Camera.main.transform.forward, newVec);
 			if(a < smallestAngle){
