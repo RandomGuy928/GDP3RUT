@@ -47,6 +47,10 @@ public class Repulsor : MonoBehaviour {
 		if(!isActive || range == 0)
 			return Vector3.zero;
 		
+		float dist = Vector3.Distance (point, transform.position);
+		if(dist > range)
+			return Vector3.zero;
+		
 		// getting the appropriate gravity vector
 		if(isGravityPlane){
 			if(gravPlaneUsesVectorUp)
@@ -57,25 +61,22 @@ public class Repulsor : MonoBehaviour {
 		else
 			vec = Vector3.Normalize (point - transform.position);
 		
-		float dist = Vector3.Distance (point, transform.position);
-		
 		// determining if repulsion vector is blocked
 		Ray ray;
 	    RaycastHit hit;
 	    ray = new Ray(point, -vec);
 		if (blockable){
-			if(Physics.Raycast(ray, out hit, dist, manager.GetMask ())){
+			if(Physics.Raycast(ray, out hit, dist*2, manager.GetMask ())){
 				GameObject other = hit.collider.gameObject;
-				if(gameObject != other)
+				if(gameObject != other){
 					return Vector3.zero;
+				}
 			}
 			else
 				return Vector3.zero;
 		}
 
 		// scaling the return vector		
-		if(dist > range)
-			return Vector3.zero;
 		return strength * strengthCurve.Evaluate(dist/range) * vec;
 	}
 	
