@@ -4,23 +4,114 @@ using System.Collections;
 public class RemoteControl : MonoBehaviour {
 	
 	Repulsor[] controlledRepulsors = new Repulsor[3];
+	
+	ArrayList selectors = new ArrayList();
+	
+	public float maxAngleFar = 15;
+	public float maxAngleClose = 90;
+	public float closeFarThreshold = 5;	
+	
+	GameObject last = null;
+	
+	public GameObject leftRemote;
+	public GameObject rightRemote;
+	
 	// Use this for initialization
 	void Start () 
 	{
-	
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		SelectRepulser();
+		
+		if(!Input.GetButton ("Shift")){
+			if(Input.GetButtonDown("Fire1") && leftRemote != null){
+				leftRemote.GetComponent<Selector>().Trigger();	
+			}
+			if(Input.GetButtonDown("Fire2") && rightRemote != null){
+				rightRemote.GetComponent<Selector>().Trigger();	
+			}
+		}
+		
+		GameObject sel = SelectRepulser(maxAngleClose, closeFarThreshold, true);
+		bool close;
+		if(sel == null){
+			sel = SelectRepulser (maxAngleFar, 9999f, false);
+			close = false;
+		}
+		else{
+			close = true;
+		}
+
+		if(last != sel && last != null){
+			last.GetComponent<Selector>().Deselect();
+			last = null;
+		}
+		if(sel == null)
+			return;
+		last = sel;
+		sel.GetComponent<Selector>().Select();
+		sel.GetComponent<Selector>().SetClose(close);
+		
+		if(sel.GetComponent<Selector>().canBeSaved){
+			if(Input.GetButton ("Shift")){
+				if(Input.GetButtonDown ("Fire1")){
+					if(rightRemote == sel){
+						rightRemote = leftRemote;	
+					}
+					leftRemote = sel;
+				}
+				if(Input.GetButtonDown ("Fire2")){
+					if(leftRemote == sel){
+						leftRemote = rightRemote;	
+					}
+					rightRemote = sel;
+				}
+			}
+		}
+		
+		if(Input.GetButtonDown("Use") && close){
+			sel.GetComponent<Selector>().Trigger();	
+		}
+
+		
+
+
+		//    currentSelections.Clear ();
 	}
 	
-	void SelectRepulser ()
+	GameObject SelectRepulser (float angle, float maxDist, bool close)
 	{
 		// check if cone collides with repulsors
 		// if more than 1: select the repulsor that is closest to the center of the Cone.
 		//
+		
+		if(selectors.Count == 0)
+			return null;
+		
+		GameObject sel = null;
+		float smallestAngle = angle;
+		for(int i = 0; i < selectors.Count; i++){
+			Vector3 newVec = ((GameObject)selectors[i]).transform.position - transform.position;
+			if(newVec.magnitude > maxDist ||
+				(((GameObject)selectors[i]).GetComponent<Selector>().closeOnly && !close) ||
+				!((GameObject)selectors[i]).GetComponent<Selector>().canBeSelected)
+				continue;
+			float a = Vector3.Angle (Camera.main.transform.forward, newVec);
+			if(a < smallestAngle){
+				Ray ray = new Ray(transform.position, newVec);
+				RaycastHit hit;
+				if(Physics.Raycast (ray, out hit)){
+					if(hit.collider.gameObject == (GameObject)selectors[i]){
+						smallestAngle = a;
+						sel = (GameObject)selectors[i];
+					}
+				}
+			}
+		}
+		
+		return sel;
 	}
 		
 	void AssignRepulsor ()	
@@ -32,4 +123,9 @@ public class RemoteControl : MonoBehaviour {
 		
 		
 	}
+	
+	public void AddSelector(GameObject go){
+		selectors.Add (go);
+	}
+	
 }

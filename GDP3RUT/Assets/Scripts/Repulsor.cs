@@ -44,7 +44,7 @@ public class Repulsor : MonoBehaviour {
 		Vector3 vec;
 		
 		// some checks for defaulting to zero vector
-		if(!active || range == 0)
+		if(!isActive || range == 0)
 			return Vector3.zero;
 		
 		// getting the appropriate gravity vector
