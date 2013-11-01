@@ -20,5 +20,22 @@ public class ParticleGravity : MonoBehaviour {
 		
 		transform.up = tmp;
 		
+		//transform.LookAt(manager.GravityAtPoint(transform.position));
+		
 	}
+	
+	void LateUpdate () {
+ 
+       ParticleSystem.Particle[] p = new ParticleSystem.Particle[particleSystem.particleCount+1];
+       int l = particleSystem.GetParticles(p);
+ 
+        int i = 0;
+        while (i < l) {
+           p[i].velocity = (-.1f * manager.GravityAtPoint(p[i].position));
+         i++;
+        }
+ 
+       particleSystem.SetParticles(p, l);    
+ 
+    }
 }

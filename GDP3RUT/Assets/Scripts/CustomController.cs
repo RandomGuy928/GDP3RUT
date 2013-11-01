@@ -69,7 +69,7 @@ public class CustomController : MonoBehaviour {
 		
 		Vector3 grav_vec = manager.GravityAtPoint (transform.position);
 		
-		if (!isGrounded && !spinning){
+		//if (!isGrounded && !spinning){
 			ray = new Ray(transform.position, grav_vec);
 			if (Physics.Raycast (ray, out hit, jumpRange)){
 				//if(hit.normal == prev_hit || prev_hit == Vector3.zero)
@@ -83,10 +83,10 @@ public class CustomController : MonoBehaviour {
 				//StartCoroutine (ReorientPlayer(-grav_vec, 0.2f, 1, jumpTime));	
 				FixNormal (-grav_vec, 0.05f);
 			}
-		}
-		else{
-			jumpTime = 0;	
-		}
+		//}
+		//else{
+		//	jumpTime = 0;	
+		//}
 	 
 	    // movement code - turn left/right with Horizontal axis:
 	    transform.Rotate(0, Input.GetAxis("Mouse X")*turnSpeed*Time.deltaTime, 0);
