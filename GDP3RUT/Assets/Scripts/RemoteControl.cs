@@ -89,7 +89,7 @@ public class RemoteControl : MonoBehaviour {
 				}
 			}
 			
-			if(Input.GetButtonDown("Use") && close && sel.GetComponent<Selector>().closeOnly){
+			if(Input.GetButtonDown("Use") && close && !sel.GetComponent<Selector>().canBeSaved){
 				sel.GetComponent<Selector>().Trigger();	
 			}
 			if(!displayConnections)

@@ -94,7 +94,7 @@ public class Selector : MonoBehaviour {
 			HideConnections();
 		if(!hasHalos)
 			return;
-		if(isClose && selected && closeOnly){
+		if(isClose && selected && !canBeSaved){
 			closeHalo.enabled = true;
 			farHalo.enabled = false;
 			leftHalo.enabled = false;
