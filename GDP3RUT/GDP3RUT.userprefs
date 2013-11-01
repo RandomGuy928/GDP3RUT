@@ -1,19 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Selector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\RemoteControl.cs">
     <Files>
-<<<<<<< HEAD
-      <File FileName="Assets\Scripts\Selector.cs" Line="28" Column="17" />
-      <File FileName="Assets\RemoteControl.cs" Line="60" Column="31" />
-      <File FileName="Assets\Scripts\CustomController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Repulsor.cs" Line="68" Column="18" />
-=======
-      <File FileName="Assets\Scripts\Selector.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CustomController.cs" Line="89" Column="5" />
-      <File FileName="Assets\RemoteControl.cs" Line="66" Column="22" />
-      <File FileName="Assets\Scripts\Repulsor.cs" Line="18" Column="39" />
->>>>>>> 8dbba95c8737658bc80a7246ff7fae8dfeb80777
-      <File FileName="Assets\Scripts\RepulsorManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\RemoteControl.cs" Line="82" Column="7" />
+      <File FileName="Assets\Scripts\Selector.cs" Line="100" Column="29" />
+      <File FileName="Assets\Scripts\Repulsor.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

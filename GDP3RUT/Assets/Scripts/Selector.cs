@@ -94,7 +94,7 @@ public class Selector : MonoBehaviour {
 			HideConnections();
 		if(!hasHalos)
 			return;
-		if(isClose && selected){
+		if(isClose && selected && closeOnly){
 			closeHalo.enabled = true;
 			farHalo.enabled = false;
 			leftHalo.enabled = false;
@@ -156,6 +156,18 @@ public class Selector : MonoBehaviour {
 			if(repul != null)
 				repul.ToggleActive ();	
 		}
+	}
+	
+	public void Activate(){
+		Repulsor rep = gameObject.GetComponent<Repulsor>();
+		if(rep != null)
+			rep.SetActive ();
+	}
+	
+	public void Deactivate(){
+		Repulsor rep = gameObject.GetComponent<Repulsor>();
+		if(rep != null)
+			rep.SetInactive ();
 	}
 	
 	public Vector3 GetPos(){

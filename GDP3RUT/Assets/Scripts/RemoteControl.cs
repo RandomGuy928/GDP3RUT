@@ -34,11 +34,18 @@ public class RemoteControl : MonoBehaviour {
 		
 		if(!Input.GetButton ("Shift")){
 			if(Input.GetButtonDown("Fire1") && leftRemote != null){
-				leftRemote.GetComponent<Selector>().Trigger();	
+				leftRemote.GetComponent<Selector>().Activate();	
 			}
 			if(Input.GetButtonDown("Fire2") && rightRemote != null){
-				rightRemote.GetComponent<Selector>().Trigger();	
+				rightRemote.GetComponent<Selector>().Activate();	
 			}
+		}
+		
+		if(Input.GetButtonUp("Fire1") && leftRemote != null){
+			leftRemote.GetComponent<Selector>().Deactivate();	
+		}
+		if(Input.GetButtonUp("Fire2") && rightRemote != null){
+			rightRemote.GetComponent<Selector>().Deactivate();	
 		}
 		
 		GameObject sel = SelectRepulser(maxAngleClose, closeFarThreshold, true, false);
@@ -82,7 +89,7 @@ public class RemoteControl : MonoBehaviour {
 				}
 			}
 			
-			if(Input.GetButtonDown("Use") && close){
+			if(Input.GetButtonDown("Use") && close && sel.GetComponent<Selector>().closeOnly){
 				sel.GetComponent<Selector>().Trigger();	
 			}
 			if(!displayConnections)
