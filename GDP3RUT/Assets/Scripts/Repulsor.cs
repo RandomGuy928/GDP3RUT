@@ -60,7 +60,7 @@ public class Repulsor : MonoBehaviour {
 		}
 		else
 			vec = Vector3.Normalize (point - transform.position);
-		
+				
 		// determining if repulsion vector is blocked
 		Ray ray;
 	    RaycastHit hit;
@@ -75,6 +75,7 @@ public class Repulsor : MonoBehaviour {
 			else
 				return Vector3.zero;
 		}
+
 
 		// scaling the return vector		
 		return strength * strengthCurve.Evaluate(dist/range) * vec;

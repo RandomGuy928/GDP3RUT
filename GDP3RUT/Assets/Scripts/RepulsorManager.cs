@@ -16,7 +16,6 @@ public class RepulsorManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		                        
 	}
 	
 	public void AddRepulsor(GameObject rep){

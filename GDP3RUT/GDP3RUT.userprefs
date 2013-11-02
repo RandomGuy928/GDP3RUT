@@ -1,20 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CustomController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\RepulsorManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\RemoteControl.cs" Line="5" Column="2" />
-      <File FileName="Assets\Scripts\s_LoadLevel.cs" Line="14" Column="23" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\s_LoadLevel.cs">
-    <Files>
-      <File FileName="Assets\Scripts\s_LoadLevel.cs" Line="7" Column="35" />
-      <File FileName="Assets\Scripts\RemoteControl.cs" Line="1" Column="1" />
->>>>>>> e86e88b8f4acc3d155d719fff9ec74e8efb9a15b
-      <File FileName="Assets\Scripts\PlatformInputController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\RepulsorManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Selector.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CustomController.cs" Line="135" Column="17" />
+      <File FileName="Assets\Scripts\CustomController.cs" Line="67" Column="69" />
+      <File FileName="Assets\Scripts\RepulsorManager.cs" Line="15" Column="1" />
+      <File FileName="Assets\Scripts\s_LoadLevel.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Repulsor.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\HUDGravity.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
