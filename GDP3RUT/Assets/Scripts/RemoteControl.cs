@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class RemoteControl : MonoBehaviour {
-	
-	Repulsor[] controlledRepulsors = new Repulsor[3];
-	
+		
 	ArrayList selectors = new ArrayList();
 	
 	public float maxAngleFar = 15;
