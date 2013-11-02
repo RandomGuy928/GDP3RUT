@@ -13,6 +13,7 @@ public class CustomController : MonoBehaviour {
 	public float jumpSpeed = 10f; // vertical jump initial speed
 	public float jumpRange = 10f; // range to detect target wall
 	public float wallRunTime = 0.5f;
+	public float wallRunResetTime = 1f;
 	
 	public float gravityAngle = 80f;
 	 
@@ -27,6 +28,8 @@ public class CustomController : MonoBehaviour {
 //	int airborneCheck = 0;
 	float jumpTime = 0;
 	float collideTime = 0;
+	float runResetTime = 0;
+	Vector3 grav_vec = new Vector3(0,0,0);
 //	Vector3 prev_hit = new Vector3(0, 0, 0);
 //	bool spinning = false; 
 	
@@ -61,6 +64,10 @@ public class CustomController : MonoBehaviour {
 		if(rigidbody.velocity.magnitude > terminalVelocity)
 			rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
 	}
+	
+	public Vector3 GetGrav(){
+		return grav_vec;	
+	}
 	 
 	void Update(){
 	    // jump code - jump to wall or simple jump
@@ -78,7 +85,7 @@ public class CustomController : MonoBehaviour {
 	        }                
 	    }
 		
-		Vector3 grav_vec = manager.GravityAtPoint (transform.position);
+		grav_vec = manager.GravityAtPoint (transform.position);
 		
 		//if (!isGrounded && !spinning){
 			ray = new Ray(transform.position, grav_vec);
@@ -119,6 +126,7 @@ public class CustomController : MonoBehaviour {
 		else{
 			collideTime = 0;
 			jumpTime = 0;	
+			runResetTime = 0;
 		}
 	    myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed*Time.deltaTime);
 	    // find forward direction with new myNormal:
@@ -128,11 +136,18 @@ public class CustomController : MonoBehaviour {
 	    transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed*Time.deltaTime);
 	    // move the character forth/back with Vertical axis:
 		if(collideTime < wallRunTime){
+			runResetTime = 0;
 	    	transform.Translate(0, 0, Input.GetAxis("Vertical")*moveSpeed*Time.deltaTime); 
 	    	transform.Translate(Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime,0,0); 
 		}
-		else
+		else{
 			jumpTime = 0;
+			runResetTime += Time.deltaTime;
+			if(runResetTime > wallRunResetTime){
+				collideTime = 0;
+				runResetTime = 0;
+			}
+		}
 		
 	}
 	

@@ -5,8 +5,13 @@ using System.Collections;
 public class ParticleGravity : MonoBehaviour {
 	
 	RepulsorManager manager;
+	GameObject player;
 	Vector3 tmp;
-
+	
+	void Start(){
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+	
 	public void SetManager(GameObject man){
 		manager = man.GetComponent<RepulsorManager>();	
 	}	
@@ -31,8 +36,8 @@ public class ParticleGravity : MonoBehaviour {
  
         int i = 0;
         while (i < l) {
-           p[i].velocity = (-.1f * manager.GravityAtPoint(p[i].position));
-         i++;
+			p[i].velocity = particleSystem.transform.InverseTransformDirection (.1f * player.GetComponent<CustomController>().GetGrav());
+        	i++;
         }
  
        particleSystem.SetParticles(p, l);    
