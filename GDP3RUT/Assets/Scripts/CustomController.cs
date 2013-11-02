@@ -12,19 +12,23 @@ public class CustomController : MonoBehaviour {
 	public float deltaGround = 0.2f; // character is grounded up to this distance
 	public float jumpSpeed = 10f; // vertical jump initial speed
 	public float jumpRange = 10f; // range to detect target wall
+	public float wallRunTime = 0.5f;
+	
+	public float gravityAngle = 80f;
 	 
 	Vector3 surfaceNormal; // current surface normal
 	Vector3 myNormal; // character normal
 	float distGround; // distance from character position to ground
-	bool jumping = false; // flag &quot;I'm jumping to wall&quot;
-	float vertSpeed = 0; // vertical jump current speed 
+//	bool jumping = false; // flag &quot;I'm jumping to wall&quot;
+//	float vertSpeed = 0; // vertical jump current speed 
 	
 	RepulsorManager manager;
 	
-	int airborneCheck = 0;
+//	int airborneCheck = 0;
 	float jumpTime = 0;
-	Vector3 prev_hit = new Vector3(0, 0, 0);
-	bool spinning = false; 
+	float collideTime = 0;
+//	Vector3 prev_hit = new Vector3(0, 0, 0);
+//	bool spinning = false; 
 	
 	public void SetManager(GameObject man){
 		manager = man.GetComponent<RepulsorManager>();	
@@ -42,10 +46,17 @@ public class CustomController : MonoBehaviour {
 	    // apply constant weight force according to character normal:
 	    //rigidbody.AddForce(-gravity*rigidbody.mass*myNormal);
 		
-		if(!isGrounded)
-	    	rigidbody.AddForce(manager.GravityAtPoint (transform.position));
-		else
+		Vector3 grav = manager.GravityAtPoint (transform.position);
+		if(!isGrounded){
+	    	rigidbody.AddForce(grav);
+		}
+		//else if(Vector3.Angle (grav, -surfaceNormal) > gravityAngle){
+		//	rigidbody.AddForce (grav);
+		//	rigidbody.AddForce (50 * surfaceNormal);
+		//}
+		else{
 			rigidbody.AddForce (-surfaceNormal * manager.GravityAtPoint (transform.position).magnitude);
+		}
 		
 		if(rigidbody.velocity.magnitude > terminalVelocity)
 			rigidbody.velocity = rigidbody.velocity.normalized * terminalVelocity;
@@ -93,7 +104,7 @@ public class CustomController : MonoBehaviour {
 		
 		// update surface normal and isGrounded:
 	    ray = new Ray(transform.position, -myNormal); // cast ray downwards
-	    if (Physics.Raycast(ray, out hit)){ // use it to update myNormal and isGrounded
+	    if (Physics.Raycast(ray, out hit) && Vector3.Angle (grav_vec, -hit.normal) < gravityAngle){ // use it to update myNormal and isGrounded
 	        isGrounded = hit.distance <= distGround + deltaGround;
 	        surfaceNormal = hit.normal;
 	    }
@@ -102,6 +113,13 @@ public class CustomController : MonoBehaviour {
 	        // assume usual ground normal to avoid "falling forever"
 	        surfaceNormal = -grav_vec; 
 	    }
+		if(!isGrounded){
+			jumpTime += Time.deltaTime;
+		}
+		else{
+			collideTime = 0;
+			jumpTime = 0;	
+		}
 	    myNormal = Vector3.Lerp(myNormal, surfaceNormal, lerpSpeed*Time.deltaTime);
 	    // find forward direction with new myNormal:
 	    var myForward = Vector3.Cross(transform.right, myNormal);
@@ -109,8 +127,13 @@ public class CustomController : MonoBehaviour {
 	    var targetRot = Quaternion.LookRotation(myForward, myNormal);
 	    transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed*Time.deltaTime);
 	    // move the character forth/back with Vertical axis:
-	    transform.Translate(0, 0, Input.GetAxis("Vertical")*moveSpeed*Time.deltaTime); 
-	    transform.Translate(Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime,0,0); 
+		if(collideTime < wallRunTime){
+	    	transform.Translate(0, 0, Input.GetAxis("Vertical")*moveSpeed*Time.deltaTime); 
+	    	transform.Translate(Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime,0,0); 
+		}
+		else
+			jumpTime = 0;
+		
 	}
 	
 	void FixNormal(Vector3 normal, float radDelta){
@@ -118,11 +141,17 @@ public class CustomController : MonoBehaviour {
 		myNormal = Vector3.RotateTowards (myNormal, normal, radDelta, 1.0f);
 	}
 	
-	IEnumerator ReorientPlayer(Vector3 normal, float timeScale, int type, float time){
+	void OnCollisionStay(Collision collInfo){
+		if(!isGrounded){
+			collideTime+=Time.deltaTime;
+		}
+	}
+	
+/*	IEnumerator ReorientPlayer(Vector3 normal, float timeScale, int type, float time){
 		spinning = true;
 		Quaternion orgRot = transform.rotation;
 		airborneCheck = type;
-		var myForward = Vector3.Cross (transform.right, normal);
+		//var myForward = Vector3.Cross (transform.right, normal);
 		var dstRot = Quaternion.LookRotation (transform.forward, normal);
 		for(float t = time; t < 1.0f;){
 			t += (timeScale * Time.deltaTime);
@@ -137,7 +166,8 @@ public class CustomController : MonoBehaviour {
 		myNormal = normal;
 		spinning = false;
 	}
-	 
+	*/
+	/* 
 	IEnumerator JumpToWall(Vector3 point, Vector3 normal){
 	    // jump to wall 
 	    jumping = true; // signal it's jumping to wall
@@ -157,6 +187,7 @@ public class CustomController : MonoBehaviour {
 	    rigidbody.isKinematic = false; // enable physics
 	    jumping = false; // jumping to wall finished
 	}
+	*/
 	
 	void OnDrawGizmos(){
 		if(manager != null)
