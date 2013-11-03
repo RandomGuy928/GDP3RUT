@@ -132,7 +132,9 @@ public class CustomController : MonoBehaviour {
 	    // find forward direction with new myNormal:
 	    var myForward = Vector3.Cross(transform.right, myNormal);
 	    // align character to the new myNormal while keeping the forward direction:
-	    var targetRot = Quaternion.LookRotation(myForward, myNormal);
+		if(Vector3.Angle (myForward, transform.forward) > 45)
+			myForward = transform.forward;
+		var targetRot = Quaternion.LookRotation(myForward, myNormal);
 	    transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, lerpSpeed*Time.deltaTime);
 	    // move the character forth/back with Vertical axis:
 		if(collideTime < wallRunTime){
