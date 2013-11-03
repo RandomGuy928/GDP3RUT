@@ -81,6 +81,21 @@ public class Repulsor : MonoBehaviour {
 		return strength * strengthCurve.Evaluate(dist/range) * vec;
 	}
 	
+	public Vector3 SimpleContribution(Vector3 point){
+		// getting the appropriate gravity vector
+		Vector3 vec;
+		if(isGravityPlane){
+			if(gravPlaneUsesVectorUp)
+				vec = transform.up;
+			else
+				vec = gravityPlaneVector.normalized;
+		}
+		else
+			vec = Vector3.Normalize (point - transform.position);
+		float dist = Vector3.Distance (point, transform.position);
+		return strength * strengthCurve.Evaluate(dist/range) * vec;
+	}
+	
 	void OnDrawGizmos(){
 		Gizmos.color = Color.green;
 		//if(p != null)
