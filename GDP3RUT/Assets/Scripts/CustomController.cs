@@ -14,6 +14,7 @@ public class CustomController : MonoBehaviour {
 	public float jumpRange = 10f; // range to detect target wall
 	public float wallRunTime = 0.5f;
 	public float wallRunResetTime = 1f;
+	public float jumpResetTime = 2f;
 	
 	public float gravityAngle = 80f;
 	 
@@ -29,6 +30,7 @@ public class CustomController : MonoBehaviour {
 	float jumpTime = 0;
 	float collideTime = 0;
 	float runResetTime = 0;
+	float doubleJumpDelay = 0;
 	Vector3 grav_vec = new Vector3(0,0,0);
 //	Vector3 prev_hit = new Vector3(0, 0, 0);
 //	bool spinning = false; 
@@ -74,14 +76,16 @@ public class CustomController : MonoBehaviour {
 	    //if (jumping) return;  // abort Update while jumping to a wall
 	    Ray ray;
 	    RaycastHit hit;
+		doubleJumpDelay -= Time.deltaTime;
 	    if (Input.GetButtonDown("Jump")){ // jump pressed:
 	        //ray = new Ray(transform.position, transform.forward);
 	        //if (Physics.Raycast(ray, out hit, jumpRange)){ // wall ahead?
 	        //    StartCoroutine(JumpToWall(hit.point, hit.normal)); // yes: jump to the wall
 	        //}
 	        //else
-			if (isGrounded){ // no: if grounded, jump up
+			if (isGrounded && doubleJumpDelay <= 0f){ // no: if grounded, jump up
 	            rigidbody.velocity += jumpSpeed * myNormal;
+				doubleJumpDelay = jumpResetTime;
 	        }                
 	    }
 		
