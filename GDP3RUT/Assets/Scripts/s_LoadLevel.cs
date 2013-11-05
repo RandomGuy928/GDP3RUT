@@ -4,7 +4,9 @@ using System.Collections;
 
 public class s_LoadLevel : MonoBehaviour {
 	// Array of levels
-	string[] levelArray = { "Level1","SimpleLevel", "ClimbLevel", "Level", "FlingLevel", "HarderLevel", "IntersectionLevel"};
+	string[] levelArray = {"SimpleLevel", "Level1", "Level", "ClimbLevel",
+	"HarderLevel", "FlingLevel", "IntersectionLevel", "GlassTableLevel",
+	"GlassFling", "FlingAroundLevel", "Inversion", "GlassWindowLevel"};
 	GameObject player;
 	// On triggerenter:
 	void OnTriggerEnter(Collider collider) {
