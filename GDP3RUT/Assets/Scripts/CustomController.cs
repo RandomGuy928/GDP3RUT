@@ -74,6 +74,8 @@ public class CustomController : MonoBehaviour {
 	}
 	 
 	void Update(){
+		if(Input.GetKeyDown ("escape"))
+			Application.Quit ();
 	    // jump code - jump to wall or simple jump
 	    //if (jumping) return;  // abort Update while jumping to a wall
 		if(lastVel.magnitude - rigidbody.velocity.magnitude > thudThreshold){

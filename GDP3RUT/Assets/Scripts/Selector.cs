@@ -10,6 +10,7 @@ public class Selector : MonoBehaviour {
 	bool isClose;
 	public bool canBeSelected;
 	public bool hasHalos = true;
+	public Shader particlesAdditive;
 	
 	RemoteControl controller;
 	
@@ -52,7 +53,7 @@ public class Selector : MonoBehaviour {
 	public LineRenderer InitializeLineRenderer(){
 		lengthOfLineRenderer = (controlledRepulsors.Length + switches.Count)*2;
 		LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.material = new Material(particlesAdditive);
         lineRenderer.SetColors(Color.green, Color.green);
         lineRenderer.SetWidth(0.2F, 0.2F);
         lineRenderer.SetVertexCount(lengthOfLineRenderer);
