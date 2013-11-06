@@ -22,6 +22,10 @@ public class AudioHandler : MonoBehaviour {
 		updateAudio = false;
 		if(startSound == null || endSound == null)
 			loopOnly = true;
+		if(GetComponent<Repulsor>().isActive){
+			updateAudio = true;
+			continuePlaying = true;
+		}
 	}
 	
 	// Update is called once per frame
@@ -86,6 +90,7 @@ public class AudioHandler : MonoBehaviour {
 	}
 	
 	public void Deactivate(){
+		audio.loop = false;
 		continuePlaying = false;
 		if(loopOnly){
 			audio.Stop ();

@@ -1,14 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ParticleGravity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AudioHandler.cs">
     <Files>
       <File FileName="Assets\Scripts\ParticleGravity.cs" Line="36" Column="1" />
-      <File FileName="Assets\Scripts\CustomController.cs" Line="80" Column="1" />
+      <File FileName="Assets\Scripts\CustomController.cs" Line="77" Column="1" />
       <File FileName="Assets\Scripts\s_LoadLevel.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\RepulsorParticles.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\RepulsorManager.cs" Line="39" Column="37" />
-      <File FileName="Assets\Scripts\Repulsor.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\RepulsorManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Repulsor.cs" Line="38" Column="44" />
       <File FileName="Assets\Scripts\HUDGravity.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AudioHandler.cs" Line="37" Column="1" />
+      <File FileName="Assets\Scripts\RemoteControl.cs" Line="35" Column="36" />
+      <File FileName="Assets\Scripts\Selector.cs" Line="170" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
