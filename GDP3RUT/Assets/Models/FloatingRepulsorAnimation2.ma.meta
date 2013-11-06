@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: caad847e091bedc44a4387e10a3abaea
+=======
+guid: 1e7b5b6677e229047bff26cfd961532d
+>>>>>>> a952f467a21f80b40de4a15bcafbacaf83d1d7b8
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -16,7 +20,10 @@ ModelImporter:
     4300002: pSphere3
     7400000: Take 001
     9500000: //RootNode
+<<<<<<< HEAD
     11100000: //RootNode
+=======
+>>>>>>> a952f467a21f80b40de4a15bcafbacaf83d1d7b8
   materials:
     importMaterials: 1
     materialName: 0
@@ -67,5 +74,9 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   additionalBone: 1
+<<<<<<< HEAD
   animationType: 1
+=======
+  animationType: 2
+>>>>>>> a952f467a21f80b40de4a15bcafbacaf83d1d7b8
   userData: 
