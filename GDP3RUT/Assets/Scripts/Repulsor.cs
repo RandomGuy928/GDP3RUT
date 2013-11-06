@@ -25,15 +25,27 @@ public class Repulsor : MonoBehaviour {
 	}
 	
 	public void ToggleActive(){
+		if(isActive)
+			GetComponent<AudioHandler>().Deactivate ();
+		else
+			GetComponent<AudioHandler>().Activate ();
+
 		isActive = !isActive;
 	}
 	
 	public void SetActive(){
-		isActive = true;	
+		isActive = true;
+		GetComponent<AudioHandler>().Activate ();
+	}
+	
+	public void SetActive(bool isLeft){
+		isActive = true;
+		GetComponent<AudioHandler>().Activate (isLeft);
 	}
 	
 	public void SetInactive(){
 		isActive = false;	
+		GetComponent<AudioHandler>().Deactivate ();
 	}
 	
 	public bool GetActive(){
@@ -44,7 +56,11 @@ public class Repulsor : MonoBehaviour {
 		Vector3 vec;
 		
 		// some checks for defaulting to zero vector
-		if(!active || range == 0)
+		if(!isActive || range == 0)
+			return Vector3.zero;
+		
+		float dist = Vector3.Distance (point, transform.position);
+		if(dist > range)
 			return Vector3.zero;
 		
 		// getting the appropriate gravity vector
@@ -56,26 +72,39 @@ public class Repulsor : MonoBehaviour {
 		}
 		else
 			vec = Vector3.Normalize (point - transform.position);
-		
-		float dist = Vector3.Distance (point, transform.position);
-		
+				
 		// determining if repulsion vector is blocked
 		Ray ray;
 	    RaycastHit hit;
 	    ray = new Ray(point, -vec);
 		if (blockable){
-			if(Physics.Raycast(ray, out hit, dist, manager.GetMask ())){
+			if(Physics.Raycast(ray, out hit, dist*2, manager.GetMask ())){
 				GameObject other = hit.collider.gameObject;
-				if(gameObject != other)
+				if(gameObject != other){
 					return Vector3.zero;
+				}
 			}
 			else
 				return Vector3.zero;
 		}
 
+
 		// scaling the return vector		
-		if(dist > range)
-			return Vector3.zero;
+		return strength * strengthCurve.Evaluate(dist/range) * vec;
+	}
+	
+	public Vector3 SimpleContribution(Vector3 point){
+		// getting the appropriate gravity vector
+		Vector3 vec;
+		if(isGravityPlane){
+			if(gravPlaneUsesVectorUp)
+				vec = transform.up;
+			else
+				vec = gravityPlaneVector.normalized;
+		}
+		else
+			vec = Vector3.Normalize (point - transform.position);
+		float dist = Vector3.Distance (point, transform.position);
 		return strength * strengthCurve.Evaluate(dist/range) * vec;
 	}
 	

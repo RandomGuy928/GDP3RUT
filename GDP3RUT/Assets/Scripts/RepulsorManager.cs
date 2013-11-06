@@ -16,7 +16,6 @@ public class RepulsorManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		                        
 	}
 	
 	public void AddRepulsor(GameObject rep){
@@ -34,5 +33,9 @@ public class RepulsorManager : MonoBehaviour {
 	
 	public LayerMask GetMask(){
 		return blockRaycast;	
+	}
+	
+	public bool IsDefaultGravity(Vector3 g){
+		return (g.Equals (grav_strength * grav_vec));	
 	}
 }
