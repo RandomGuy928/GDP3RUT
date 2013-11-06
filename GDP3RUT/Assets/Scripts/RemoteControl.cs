@@ -172,9 +172,9 @@ public class RemoteControl : MonoBehaviour {
 		if(switchSelected){
 			GUI.skin = skin;
 			float centerx = Screen.width / 2;
-			float centery = Screen.height / 2;
+			float centery = Screen.height / 4;
 			float size = 100f;
-			GUI.Label (new Rect(centerx-(size/2),Screen.height-300,size,size), "");
+			GUI.Label (new Rect(centerx-(size/2),Screen.height-centery,size,size), "");
 		}
 		
 	}
