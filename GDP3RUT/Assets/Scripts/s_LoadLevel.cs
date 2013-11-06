@@ -6,7 +6,7 @@ public class s_LoadLevel : MonoBehaviour {
 	// Array of levels
 	string[] levelArray = {"SimpleLevel", "Level1", "Level", "ClimbLevel",
 	"HarderLevel", "FlingLevel", "IntersectionLevel", "GlassTableLevel",
-	"GlassFling", "FlingAroundLevel", "Inversion", "GlassWindowLevel"};
+	"GlassFling", "FlingAroundLevel", "Inversion", "GlassWindowLevel", "Title"};
 	GameObject player;
 	// On triggerenter:
 	void OnTriggerEnter(Collider collider) {
