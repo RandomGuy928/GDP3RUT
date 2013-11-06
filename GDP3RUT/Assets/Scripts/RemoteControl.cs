@@ -32,10 +32,10 @@ public class RemoteControl : MonoBehaviour {
 		
 		if(!Input.GetButton ("Shift")){
 			if(Input.GetButtonDown("Fire1") && leftRemote != null){
-				leftRemote.GetComponent<Selector>().Activate();	
+				leftRemote.GetComponent<Selector>().Activate(true);	
 			}
 			if(Input.GetButtonDown("Fire2") && rightRemote != null){
-				rightRemote.GetComponent<Selector>().Activate();	
+				rightRemote.GetComponent<Selector>().Activate(false);	
 			}
 		}
 		

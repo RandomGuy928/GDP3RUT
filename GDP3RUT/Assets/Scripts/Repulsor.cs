@@ -25,15 +25,27 @@ public class Repulsor : MonoBehaviour {
 	}
 	
 	public void ToggleActive(){
+		if(isActive)
+			GetComponent<AudioHandler>().Deactivate ();
+		else
+			GetComponent<AudioHandler>().Activate ();
+
 		isActive = !isActive;
 	}
 	
 	public void SetActive(){
-		isActive = true;	
+		isActive = true;
+		GetComponent<AudioHandler>().Activate ();
+	}
+	
+	public void SetActive(bool isLeft){
+		isActive = true;
+		GetComponent<AudioHandler>().Activate (isLeft);
 	}
 	
 	public void SetInactive(){
 		isActive = false;	
+		GetComponent<AudioHandler>().Deactivate ();
 	}
 	
 	public bool GetActive(){
