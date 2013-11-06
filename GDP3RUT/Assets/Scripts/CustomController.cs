@@ -18,6 +18,7 @@ public class CustomController : MonoBehaviour {
 	
 	public float gravityAngle = 80f;
 	 
+	Vector3 lastVel = new Vector3(0,0,0);
 	Vector3 surfaceNormal; // current surface normal
 	Vector3 myNormal; // character normal
 	float distGround; // distance from character position to ground
@@ -27,6 +28,7 @@ public class CustomController : MonoBehaviour {
 	RepulsorManager manager;
 	
 //	int airborneCheck = 0;
+	public float thudThreshold = 1f;
 	float jumpTime = 0;
 	float collideTime = 0;
 	float runResetTime = 0;
@@ -74,6 +76,11 @@ public class CustomController : MonoBehaviour {
 	void Update(){
 	    // jump code - jump to wall or simple jump
 	    //if (jumping) return;  // abort Update while jumping to a wall
+		if(lastVel.magnitude - rigidbody.velocity.magnitude > thudThreshold){
+			audio.Play();	
+		}
+		lastVel = rigidbody.velocity;
+		
 	    Ray ray;
 	    RaycastHit hit;
 		doubleJumpDelay -= Time.deltaTime;

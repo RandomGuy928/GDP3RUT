@@ -164,6 +164,12 @@ public class Selector : MonoBehaviour {
 			rep.SetActive ();
 	}
 	
+	public void Activate(bool isLeft){
+		Repulsor rep = gameObject.GetComponent<Repulsor>();
+		if(rep != null)
+			rep.SetActive (isLeft);
+	}
+	
 	public void Deactivate(){
 		Repulsor rep = gameObject.GetComponent<Repulsor>();
 		if(rep != null)

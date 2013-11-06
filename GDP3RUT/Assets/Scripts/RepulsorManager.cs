@@ -34,4 +34,8 @@ public class RepulsorManager : MonoBehaviour {
 	public LayerMask GetMask(){
 		return blockRaycast;	
 	}
+	
+	public bool IsDefaultGravity(Vector3 g){
+		return (g.Equals (grav_strength * grav_vec));	
+	}
 }
