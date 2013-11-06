@@ -77,8 +77,8 @@ public class CustomController : MonoBehaviour {
 		if(Input.GetKeyDown ("escape"))
 			Application.Quit ();
 	    // jump code - jump to wall or simple jump
-	    //if (jumping) return;  // abort Update while jumping to a wall
-		if(lastVel.magnitude - rigidbody.velocity.magnitude > thudThreshold){
+		if(lastVel.magnitude - rigidbody.velocity.magnitude > 2){
+			audio.volume = Mathf.Max ((lastVel.magnitude - rigidbody.velocity.magnitude - 2) / (thudThreshold-2),0);
 			audio.Play();	
 		}
 		lastVel = rigidbody.velocity;
