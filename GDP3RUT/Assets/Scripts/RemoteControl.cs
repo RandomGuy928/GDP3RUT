@@ -16,6 +16,10 @@ public class RemoteControl : MonoBehaviour {
 	
 	public bool displayConnections = false;
 	
+	public GUISkin skin;
+	
+	bool switchSelected;
+	
 	// Use this for initialization
 	void Start () 
 	{
@@ -65,10 +69,13 @@ public class RemoteControl : MonoBehaviour {
 		if(last == sel && last != null){
 			last.GetComponent<Selector>().Detarget ();	
 		}
+		switchSelected = false;
 		if(sel != null){
 			last = sel;
 			sel.GetComponent<Selector>().Select();
 			sel.GetComponent<Selector>().SetClose(close);
+			if(sel.GetComponent<Selector>().closeOnly)
+				switchSelected = true;
 			
 			if(sel.GetComponent<Selector>().canBeSaved){
 				if(Input.GetButton ("Shift")){
@@ -159,6 +166,17 @@ public class RemoteControl : MonoBehaviour {
 	
 	public void AddSelector(GameObject go){
 		selectors.Add (go);
+	}
+	
+	void OnGUI(){
+		if(switchSelected){
+			GUI.skin = skin;
+			float centerx = Screen.width / 2;
+			float centery = Screen.height / 2;
+			float size = 100f;
+			GUI.Label (new Rect(centerx-(size/2),Screen.height-300,size,size), "");
+		}
+		
 	}
 	
 }
