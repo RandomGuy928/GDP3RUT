@@ -8,11 +8,17 @@ public class StartGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Screen.showCursor = false;
-	
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(Screen.lockCursor == false)
+		{
+			if(Input.GetMouseButtonDown(0))
+			{
+				Screen.lockCursor = true;
+			}
+		}
 		if(Input.GetKeyDown ("escape"))
 			Application.Quit ();
 		if(Input.GetButtonDown("Jump")){

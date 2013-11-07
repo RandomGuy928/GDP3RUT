@@ -74,6 +74,14 @@ public class CustomController : MonoBehaviour {
 	}
 	 
 	void Update(){
+		if(Screen.lockCursor == false)
+		{
+			if(Input.GetMouseButtonDown(0))
+			{
+				Screen.lockCursor = true;
+			}
+		}
+		
 		if(Input.GetKeyDown ("escape"))
 			Application.Quit ();
 	    // jump code - jump to wall or simple jump
